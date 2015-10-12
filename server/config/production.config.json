@@ -3,7 +3,7 @@
   "defaultChannel": "1bd3b5a8a7a560e168b3890a",
   "app":{
     "serverUrl":"https://vanilla-chat.herokuapp.com",
-    "socketOrigin":"https://vanilla-chat.herokuapp.com/:*"
+    "socketOrigin":"https://vanilla-chat.herokuapp.com:*"
   },
   "mongoose": {
     "uri": "mongodb://heroku_mhj4715m:l3ujepied3qdopfj5g43nh3k15@ds033754.mongolab.com:33754/heroku_mhj4715m",
