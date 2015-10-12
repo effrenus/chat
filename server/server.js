@@ -71,7 +71,7 @@ app.use(function httpErrorHandler(err, req, res, next) {
 });
 
 const server = http.createServer(app);
-server.listen(config.get('port'), () => log.info('Express server listening on port ' + config.get('port')));
+server.listen(process.env.PORT || config.get('port'), () => log.info('Express server listening on port ' + config.get('port')));
 
 const io = require('./socket')(server);
 app.set('io', io);
