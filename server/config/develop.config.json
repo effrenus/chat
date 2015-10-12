@@ -1,12 +1,12 @@
 {
-  "port": 3000,
+  "port": 80,
   "defaultChannel": "1bd3b5a8a7a560e168b3890a",
   "app":{
-    "serverUrl":"http://localhost:3000",
-    "socketOrigin":"http://localhost:*"
+    "serverUrl":"https://vanilla-chat.herokuapp.com/",
+    "socketOrigin":"https://vanilla-chat.herokuapp.com/:*"
   },
   "mongoose": {
-    "uri": "mongodb://127.0.0.1:27017",
+    "uri": "mongodb://heroku_mhj4715m:l3ujepied3qdopfj5g43nh3k15@ds033754.mongolab.com:33754/heroku_mhj4715m",
     "options": {
       "server": {
         "socketOptions": {
