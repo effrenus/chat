@@ -12,12 +12,13 @@
     "build": "npm run clean && gulp --gulpfile web/gulpfile.js build",
     "lint": "eslint ./**/*.{js,jsx} --ignore-path .gitignore",
     "gulp": "gulp --gulpfile web/gulpfile.js",
-    "gulp:watch": "gulp --gulpfile web/gulpfile.js watch"
+    "gulp:watch": "gulp --gulpfile web/gulpfile.js watch",
+    "postinstall": "npm run build"
   },
   "pre-commit": [
     "lint"
   ],
-  "homepage": "http://vjs.cloudapp.net/",
+  "homepage": "https://vanilla-chat.herokuapp.com/",
   "dependencies": {
     "async": "^1.4.2",
     "body-parser": "^1.0.2",
