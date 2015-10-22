@@ -7,13 +7,14 @@ var AVATAR_IMAGES = config.get('AVATAR_IMAGES');
 exports.post = function(req, res, next) {
 	var numC = Math.floor((Math.random() * AVATAR_COLORS.length) + 1) - 1;
 	var numA = Math.floor((Math.random() * AVATAR_IMAGES.length) + 1) - 1;
+
 	var user = new models.User(
 		{
 			username: req.body.username,
 			password: req.body.password,
 			email: req.body.email,
 			color: `${AVATAR_COLORS[numC]}`,
-			avatar: `${config.get('STATIC_PATH')}/${AVATAR_IMAGES[numA]}.png`
+			avatar: `${config.get('STATIC_PATH')}/${AVATAR_IMAGES[numA]}`
 		}
 	);
 	user.save(function(err) {

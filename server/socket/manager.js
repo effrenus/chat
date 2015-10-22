@@ -13,6 +13,29 @@ Object.assign(
 			return this.handlers[socketId];
 		},
 
+		removeHandlers: function(socketId) {
+			if (this.handlers[socketId]) {
+				this.handlers[socketId] = null;
+			}
+		},
+
+		disconnectUser: function(userId, sessionId) {
+			var user = this.users.getById(userId);
+			var sockets = user.sockets;
+
+			sockets.forEach((socket, index) => {
+				if (socket.handshake.session.id === sessionId) {
+					socket.emit('logout');
+					socket.disconnect();
+					sockets.splice(index, 1);
+					this.removeHandlers(socket.id);
+				}
+				if (sockets.length === 0) {
+					this.users.remove(userId);
+				}
+			});
+		},
+
 		emit: function(eventName, user, channelId, additionalData) {
 			if (user.sockets && user.sockets.length) {
 				user.sockets.forEach(socket => {

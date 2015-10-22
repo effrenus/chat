@@ -1,6 +1,6 @@
+var models = require('mongoose').models;
 var config = require('../config');
 var middleware = require('../middleware/socket');
-var models = require('../models');
 var manager = require('./manager');
 var UserHandler = require('./handlers/user');
 var ChannelHandler = require('./handlers/channel');
@@ -16,7 +16,7 @@ module.exports.socket = function(server) {
 
 	io.use(function(socket, next) {
 		var userId = socket.handshake.user._id;
-		var user = manager.users.get(userId);
+		var user = manager.users.getById(userId);
 		var channel = socket.handshake.session.passport.user.channel;
 
 		if (user) {
@@ -24,7 +24,7 @@ module.exports.socket = function(server) {
 			user.sockets.push(socket);
 		} else {
 			user = manager.users.create(userId, {
-				userData: user,
+				userData: socket.handshake.user,
 				socket: socket,
 				channel: channel || DEFAULT_CHANNEL_ID
 			});

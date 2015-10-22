@@ -5,7 +5,6 @@ var morgan = require('morgan');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var compression = require('compression');
-var cookieParser = require('cookie-parser');
 var errorhandler = require('errorhandler');
 var webpack = require('webpack');
 var webpackMiddleware = require('webpack-dev-middleware');
@@ -16,8 +15,8 @@ var config = require('./config');
 var passport = require('./lib/passport');
 var HttpError = require('./error').HttpError;
 var isDeveloping = process.env.NODE_ENV !== 'production';
-
 var app = express();
+require('./lib/database/mongoose');
 
 app.set('main_path', __dirname + path.sep);
 app.set('view engine', 'jade');
@@ -47,7 +46,6 @@ if (isDeveloping) {
 	app.use(webpackHotMiddleware(compiler));
 }
 
-app.use(cookieParser(config.get('session:secret')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
