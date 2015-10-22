@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-var mongoose = require('../lib/database/mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var AuthError = require('../error').AuthError;
 
