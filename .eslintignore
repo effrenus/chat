@@ -1,3 +1,5 @@
 static
 gulp
 node_modules
+client/libs
+tests

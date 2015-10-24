@@ -30,3 +30,15 @@ export function deactivateVideoPanel() {
 		type: uiActionType.DEACTIVATE_VIDEO_PANEL
 	};
 }
+
+export function recordAudioMessage() {
+	return {
+		type: uiActionType.RECORD_AUDIO_MESSAGE
+	};
+}
+
+export function stopRecordAudioMessage() {
+	return {
+		type: uiActionType.STOP_RECORD_AUDIO_MESSAGE
+	};
+}

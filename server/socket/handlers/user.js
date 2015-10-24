@@ -62,10 +62,11 @@ var User = inherit({
 				var socket = this._socket;
 				models.Message.getListByParams(data.channelId, data.page)
 					.then(messages => {
-						socket.emit('s.user.message_by_room', {data: messages.reverse()});
+						var normalizeMessages = messages.map(message => message.toObject());
+						socket.emit('s.user.message_by_room', {data: normalizeMessages.reverse()});
 					})
 					.catch(err => {
-						console.log(err);
+						console.log(err.stack || err);
 					});
 			}
 		},
@@ -83,6 +84,7 @@ var User = inherit({
 					} else {
 						models.Message.addNew(message)
 							.then(messageNew => {
+								console.log('saved message', message);
 								this._sendMessage(true, messageNew.channelId, messageNew);
 							})
 							.catch(function(err) {
@@ -138,7 +140,7 @@ var User = inherit({
 			status: true,
 			channelId: channelId,
 			userId: message.userId,
-			message: message
+			message: message.toObject()
 		};
 		this._socket.emit('s.user.send_message', sendData);
 		this._socket.broadcast.to(channelId).emit('s.user.send_message', sendData);
@@ -154,7 +156,7 @@ var User = inherit({
 		var mustKeys;
 		switch (event) {
 		case userTypes.SEND_MESSAGE:
-			mustKeys = {message_type: 'String', channelId: 'ObjectId', text: 'String', userId: 'ObjectId'};
+			mustKeys = {message_type: 'String', channelId: 'ObjectId', userId: 'ObjectId'};
 			break;
 		case userTypes.MESSAGE_BY_ROOM:
 			mustKeys = {channelId: 'ObjectId', page: 'Int'};

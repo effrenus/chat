@@ -38,7 +38,7 @@ class Channel extends Component {
 					<div className="channel__message">
 						<div className="channel__message-header"><span>{name}</span></div>
 						{(() => {
-							if (lastMessage) {
+							if (false && lastMessage) {
 								return (
 									<div className="channel__message-content">
 										<span className="channel__message-preview">{lastMessage.substring(0, 60)}</span>

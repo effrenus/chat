@@ -7,6 +7,9 @@ const defaultData = {
 	},
 	videoPanel: {
 		active: false
+	},
+	audioRecord: {
+		active: false
 	}
 };
 
@@ -31,6 +34,14 @@ export function ui(state = defaultData, action) {
 		state.videoPanel.active = false;
 		state.videoPanel.localStream = null;
 		state.videoPanel.remoteStream = null;
+		return assign({}, state);
+
+	case uiActionType.RECORD_AUDIO_MESSAGE:
+		state.audioRecord.active = true;
+		return assign({}, state);
+
+	case uiActionType.STOP_RECORD_AUDIO_MESSAGE:
+		state.audioRecord.active = false;
 		return assign({}, state);
 
 	default:

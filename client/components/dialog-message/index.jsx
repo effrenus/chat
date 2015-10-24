@@ -3,7 +3,8 @@ import moment from 'moment';
 import {defaultChannelId} from '../../config';
 import {markdown} from '../../text-processor/process';
 import UserPic from '../user-pic';
-import './dialog-message.sass';
+import AudioMessage from '../audio-message';
+import './index.sass';
 
 class DialogMessage extends Component {
 	static propTypes = {
@@ -100,10 +101,35 @@ class DialogMessage extends Component {
 		);
 	}
 
+	renderAudio() {
+		const {message, short} = this.props;
+
+		return (
+			<div className="dialog-message__inner-wrap">
+				{!short && this.renderUserPic()}
+				<div className="dialog-message__content">
+					{!short ?
+						<p className="dialog-message__sender">{this._getUsername()}</p> : ''}
+					<AudioMessage blob={message.message} />
+				</div>
+				<time className="dialog-message__time">{moment(message.created).format('HH:mm')}</time>
+			</div>
+		);
+	}
+
 	render() {
-		const {message: {created}} = this.props;
+		const {message: {created, messageTypeId: {type: messageType}}} = this.props;
 		const cls = 'dialog-message dialog-message--' + ((this.props.short) ? 'short' : 'long');
-		const message = this.props.short ? this.renderShort() : this.renderFull();
+		let message;
+
+		if (messageType === 'text') {
+			message = this.props.short ? this.renderShort() : this.renderFull();
+		}
+
+		if (messageType === 'audio') {
+			message = this.renderAudio();
+		}
+
 		return (
 			<li className={cls}>
 				{this.props.showDate ? <div className="dialog-message__date"><span>{moment(created).format('DD/MM')}</span></div> : ''}

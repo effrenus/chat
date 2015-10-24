@@ -20,7 +20,7 @@ var schema = new Schema({
 		required: true
 	},
 	message: {
-		type: String,
+		type: mongoose.Schema.Types.Mixed,
 		required: true
 	},
 	read: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
@@ -30,11 +30,19 @@ var schema = new Schema({
 	}
 });
 
+if (!schema.options.toObject) schema.options.toObject = {};
+schema.options.toObject.transform = function(doc, ret) {
+	if (ret.messageTypeId.type === 'audio') {
+		ret.message = ret.message.buffer;
+	}
+	delete ret.__v;
+};
+
 schema.statics.getListByParams = function(channelId, pageNum) {
 	var Message = this;
 	var limit = 10;
 	var skip = limit * pageNum - limit;
-	var promise = Message.find({channelId: channelId}).sort({created: -1}).limit(limit);
+	var promise = Message.find({channelId: channelId}).sort({created: -1}).limit(limit).populate('messageTypeId', 'type');
 	if (skip > 0) {
 		promise.skip(skip);
 	}
@@ -91,7 +99,9 @@ schema.statics.addNew = function(message) {
 					read: [message.userId]
 				};
 				newMessage = new Message(newMessageObj);
-				return newMessage.save();
+				return newMessage.save().then(message => {
+					return Message.populate(message, {path: 'messageTypeId'});
+				});
 			}
 
 			Promise.reject('MessageType is not created!');

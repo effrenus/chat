@@ -2,7 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addMessage, fetchChannelMessages} from '../../actions/messages';
-import {deactivateVideoPanel} from '../../actions/ui';
+import {recordAudioMessage, stopRecordAudioMessage, deactivateVideoPanel} from '../../actions/ui';
+import AudioRecord from '../audio-record';
 import Dialog from '../dialog';
 import VideoPanel from '../video-panel';
 import Input from '../input';
@@ -26,7 +27,6 @@ class Main extends Component {
 
 	render() {
 		const {dispatch, user, channels, messages, ui} = this.props;
-		const boundActions = bindActionCreators({addMessage}, dispatch);
 
 		return (
 			<main className="main">
@@ -38,12 +38,17 @@ class Main extends Component {
 				<Input
 						activeChannelId={this.props.channels.current}
 						user={user}
-						{...boundActions} />
+						{...bindActionCreators({addMessage, recordAudioMessage}, dispatch)} />
 				{ui.videoPanel.active ?
 					<VideoPanel
 						local={ui.videoPanel.localStream}
 						remote={ui.videoPanel.remoteStream}
 						{...bindActionCreators({deactivateVideoPanel}, dispatch)} /> : ''}
+				{ui.audioRecord.active ?
+					<AudioRecord
+						activeChannelId={this.props.channels.current}
+						userId={user._id}
+						{...bindActionCreators({addMessage, stopRecordAudioMessage}, dispatch)} /> : ''}
 			</main>
 		);
 	}
