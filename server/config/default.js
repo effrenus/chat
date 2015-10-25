@@ -1,8 +1,8 @@
 module.exports = {
 	port: process.env.PORT || 3000,
 	app: {
-		serverUrl: 'http://localhost:3000',
-		socketOrigin: 'http://localhost:*'
+		serverUrl: process.env.SERVER_URL || 'http://localhost:3000',
+		socketOrigin: process.env.SOCKET_ORIGIN || 'http://localhost:*'
 	},
 	mongoose: {
 		'uri': process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://127.0.0.1:27017',
@@ -12,6 +12,16 @@ module.exports = {
 					'keepAlive': 1
 				}
 			}
+		}
+	},
+	passport: {
+		'facebook': {
+			'clientID': process.env.FB_ID || '',
+			'clientSecret': process.env.FB_SECRET || ''
+		},
+		vk: {
+			'app_id': process.env.VK_ID || '',
+			'secret': process.env.VK_SECRET || ''
 		}
 	},
 	session: {

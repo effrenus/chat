@@ -12,3 +12,4 @@ server/pids
 layout
 node-debug.log
 npm-debug.log
+Procfile
