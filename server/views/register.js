@@ -7,6 +7,7 @@ var AVATAR_IMAGES = config.get('AVATAR_IMAGES');
 exports.post = function(req, res, next) {
 	var numC = Math.floor((Math.random() * AVATAR_COLORS.length) + 1) - 1;
 	var numA = Math.floor((Math.random() * AVATAR_IMAGES.length) + 1) - 1;
+	console.log(models.User);
 
 	var user = new models.User(
 		{
@@ -18,6 +19,7 @@ exports.post = function(req, res, next) {
 		}
 	);
 	user.save(function(err) {
+		console.log(err.stack || err);
 		return err
 			? next(err)
 			: passport.authenticate('local')(req, res, function() {
