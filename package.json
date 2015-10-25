@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "npm run clean -s",
     "prestart": "npm run build",
-    "start": "npm run server:prod",
+    "start": "npm run server:dev",
     "server:prod": "NODE_ENV=production node index.js",
     "server:dev": "npm run clean && npm run copy:js && NODE_ENV=develop DEBUG=socket.io* node index.js",
     "test": "mocha $(find test -name '*.js') --sort",
