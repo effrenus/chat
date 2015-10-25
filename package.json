@@ -10,7 +10,7 @@
     "server:dev": "npm run clean && npm run copy:js && NODE_ENV=develop DEBUG=socket.io* node index.js",
     "test": "mocha $(find test -name '*.js') --sort",
     "test:web": "mocha --compilers js:babel/register,sass:./tests/sass-compiler.js --recursive ./tests/web",
-    "build": "npm run clean && npm run copy:js && webpack",
+    "build": "npm run clean && npm run copy:js && webpack --config ./webpack.config.js --progress --colors",
     "lint": "eslint ./**/*.{js,jsx}",
     "copy:js": "mkdir -p static/js/libs && cp -r client/libs/* static/js/libs/",
     "clean": "rm -rf static/js static/css static/app.js"
