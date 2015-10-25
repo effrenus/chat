@@ -9,7 +9,7 @@ var schema = new Schema({
 	},
 	displayName: {
 		type: String,
-		required: true
+		required: false
 	},
 	ownerId: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -34,8 +34,8 @@ schema.statics.findOrCreate = function(type, userCreateId, userAddId) {
 	var newChannel = {};
 
 	if (userCreateId !== userAddId) {
-		return Channel.findOne({$and: [{users: {$in: [userCreateId]}}, {users: {$in: [userAddId]}}, {type: type}]}).
-			then(function(channel) {
+		return Channel.findOne({$and: [{users: {$in: [userCreateId]}}, {users: {$in: [userAddId]}}, {type: type}]})
+			.then(function(channel) {
 				if (!channel) {
 					newChannelObj = {
 						name: type + '_' + userCreateId + '_' + userAddId,

@@ -6,7 +6,8 @@ class Input extends Component {
 		addMessage: PropTypes.func,
 		channel: PropTypes.string,
 		activeChannelId: PropTypes.string,
-		user: PropTypes.object
+		user: PropTypes.object,
+		recordAudioMessage: PropTypes.func
 	}
 
 	componentDidMount() {
@@ -50,6 +51,7 @@ class Input extends Component {
 			<div className="dialog-input">
 				<textarea ref="messageInput" className="dialog-input__textarea"></textarea>
 				<a className="dialog-input__add-button" href="#">+</a>
+				<i onClick={this.props.recordAudioMessage} className="dialog-input__record-button fa fa-microphone"></i>
 			</div>
 		);
 	}

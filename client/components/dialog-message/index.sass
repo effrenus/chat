@@ -26,15 +26,26 @@
 		left: 20%
 		right: 20%
 		font-size: 0.8rem
-		border-top: 1px solid #BBB
 
 		span
 			position: absolute
 			left: 50%
 			top: -10px
 			padding: 0 15px
-			background: #EEE
 			transform: translateX(-50%)
+
+			&:before,
+			&:after
+				content: ''
+				position: absolute
+				top: 50%
+				width: 120px
+				height: 1px
+				background: #999
+			&:before
+				left: 100%
+			&:after
+				right: 100%
 
 	&__content
 		display: inline-block

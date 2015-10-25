@@ -9,11 +9,11 @@ const defaultChannelsData = {
 	contacts: {
 		[defaultChannelId]: {
 			_id: defaultChannelId,
-			avatar: '/img/avatar-8.png',
+			avatar: '/static/images/avatar/8.png',
 			color: '90C3D4',
 			is_online: true,
 			message_count: 0,
-			name: 'TROLLING ROOM',
+			name: 'General channel',
 			type: 'room',
 			user: 'Lobby',
 			lastMessage: '',
@@ -84,7 +84,11 @@ export function channels(state = defaultChannelsData, action) {
 			return state;
 		}
 		const {channelId, text, message} = messageData;
-		state.contacts[channelId].lastMessage = text || message;
+		if (messageData.message_type === 'audio') {
+			state.contacts[channelId].lastMessage = '♪ (audio)';
+		} else {
+			state.contacts[channelId].lastMessage = text || message;
+		}
 		return assign({}, state);
 
 	default:

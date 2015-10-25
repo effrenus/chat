@@ -51,11 +51,8 @@ var Channels = inherit({
 							manager.sendStatus('s.channel.delete', socket.handshake.user._id, toUser);
 						}
 
-						/*
-						 * нужно добавить логику при удалении чтобы он менял канал на дефолтный
-						 */
-
-						// И удаляем из глобального объекта пользователя данный контакт
+						// TODO: Set default channel to active
+						// TODO: Invoke user method `removeChannel`
 						delete Users[socket.handshake.user._id].contacts[channel.id];
 
 						socket.emit('s.channel.delete', sendObject);

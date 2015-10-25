@@ -1,9 +1,8 @@
 import Peer from 'peerjs';
+import {getUserMedia} from '../utils/media';
 import store from '../store';
 import {activateVideoPanel} from '../actions/ui';
 import {PEERJS_KEY, STREAM_REQUEST_TIMEOUT} from '../config';
-
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 const userMedia = {
 	audio: {
@@ -36,7 +35,7 @@ const videoStream =  {
 
 	requestLocalStream: function() {
 		return new Promise((resolve, reject) => {
-			navigator.getUserMedia(
+			getUserMedia(
 				userMedia,
 				stream => {
 					this.localStream = stream;

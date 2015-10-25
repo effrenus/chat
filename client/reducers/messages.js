@@ -1,6 +1,6 @@
 import assign from 'object-assign';
 import types from '../constants/messages';
-import uniq from 'lodash/array/uniq'; // нужна для выборки только уникальных
+import uniq from 'lodash/array/uniq';
 
 function updateChannelMessages(state, channelId, message, userId, reverse = false, page = 1) {
 	if (!state[channelId]) {
@@ -33,7 +33,6 @@ export function messages(state = {}, action) {
 		return state;
 
 	case types.ADD_REMOTE_MESSAGE:
-
 		if (!action.message) {
 			return state;
 		}

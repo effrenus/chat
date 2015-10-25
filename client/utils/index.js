@@ -5,3 +5,9 @@ export function isEqualDate(d1, d2) {
 	 date1.getMonth() === date2.getMonth() &&
 	 date1.getFullYear() === date2.getFullYear();
 }
+
+export const log = function() {
+	if (DEBUG) {
+		console.log.apply(console, arguments);
+	}
+};
