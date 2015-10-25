@@ -39,7 +39,7 @@ class Register extends Component {
 
 	render() {
 		return (
-			<form className="register-form" ref="form" onSubmit={::this.onSubmit} action="." method="POST">
+			<form className="register-form" ref="form" onSubmit={::this.onSubmit} action="." method="POST" autoComplete="off">
 				<div className="register-form__header">
 					<Link to={'/login'}>Login</Link>
 					<h1>Register</h1>
@@ -49,15 +49,15 @@ class Register extends Component {
 
 					<p className="register-form__field">
 						<label>Username</label>
-						<input type="text" name="username" required />
+						<input type="text" name="username" autoComplete="off" required />
 					</p>
 					<p className="register-form__field">
 						<label>Email</label>
-						<input type="email" name="email" required />
+						<input type="email" name="email" autoComplete="off" required />
 					</p>
 					<p className="register-form__field">
 						<label>Password</label>
-						<input type="password" name="password" required />
+						<input type="password" name="password" autoComplete="off" required />
 					</p>
 
 					<button className="register-form__submit" type="submit">Create</button>

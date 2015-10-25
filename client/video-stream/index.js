@@ -1,8 +1,8 @@
 import Peer from 'peerjs';
-import {getUserMedia} from '../utils/media';
+import {getUserMedia} from '../utils/media'; /* eslint no-unused-vars: 0*/
 import store from '../store';
 import {activateVideoPanel} from '../actions/ui';
-import {PEERJS_KEY, STREAM_REQUEST_TIMEOUT} from '../config';
+import {STREAM_REQUEST_TIMEOUT} from '../config';
 
 const userMedia = {
 	audio: {
@@ -20,8 +20,9 @@ const userMedia = {
 
 const videoStream =  {
 	init: function(userId) {
+		const {hostname, port} = window.location;
 		this.userId = userId;
-		this.peer = new Peer(userId, {key: PEERJS_KEY});
+		this.peer = new Peer(userId, {host: hostname, port: port, path: '/peer'});
 		this.bindHandlers();
 	},
 
@@ -35,7 +36,7 @@ const videoStream =  {
 
 	requestLocalStream: function() {
 		return new Promise((resolve, reject) => {
-			getUserMedia(
+			navigator.getUserMedia(
 				userMedia,
 				stream => {
 					this.localStream = stream;
