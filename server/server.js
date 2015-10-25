@@ -91,7 +91,9 @@ app.use(function httpErrorHandler(err, req, res, next) {
 });
 
 const server = http.createServer(app);
-server.listen(config.get('port'), () => log.info('Express server listening on port ' + config.get('port')));
+server.listen(process.env.PORT || config.get('port'), () => log.info('Express server listening on port ' + config.get('port')));
+
+app.use('/peer', require('peer').ExpressPeerServer(server, {debug: isDeveloping})); /* eslint new-cap: 0 */
 
 const io = require('./socket').socket(server);
 app.set('io', io);

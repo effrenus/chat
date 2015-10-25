@@ -16,12 +16,12 @@ module.exports = {
 	},
 	passport: {
 		'facebook': {
-			'clientID': process.env.FB_ID || '',
-			'clientSecret': process.env.FB_SECRET || ''
+			'clientID': process.env.FB_ID || 'test',
+			'clientSecret': process.env.FB_SECRET || 'test'
 		},
 		vk: {
-			'app_id': process.env.VK_ID || '',
-			'secret': process.env.VK_SECRET || ''
+			'app_id': process.env.VK_ID || 'test',
+			'secret': process.env.VK_SECRET || 'test'
 		}
 	},
 	session: {

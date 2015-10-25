@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var models = mongoose.models;
 var Schema = mongoose.Schema;
+var manager = require('../socket/manager');
 
 var schema = new Schema({
 	name: {
@@ -99,7 +100,8 @@ schema.statics.prepareChannel = function(id, channel) {
 					color: user.color,
 					message_count: unreadMessages.length,
 					lastMessage: lastMessage,
-					total_messages: totalMessages
+					total_messages: totalMessages,
+					is_online: manager.users.has(userID)
 				});
 			});
 	}

@@ -2,8 +2,6 @@ export const YANDEX_TRANSLATE_API_KEY = 'trnsl.1.1.20150914T130843Z.938cec0dd175
 
 export const defaultChannelId = '1bd3b5a8a7a560e168b3890a';
 
-export const PEERJS_KEY = '6dejoe6ydody4x6r';
-
 export const STREAM_REQUEST_TIMEOUT = 5000;
 
 export const AUDIO_MESSAGE_DURATION = 30000;
