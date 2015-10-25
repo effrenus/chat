@@ -18,9 +18,6 @@ exports.post = function(req, res, next) {
 		}
 	);
 	user.save(function(err) {
-		if (err) {
-			console.log(err.stack || err);
-		}
 		return err
 			? next(err)
 			: passport.authenticate('local')(req, res, function() {
