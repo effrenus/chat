@@ -63,6 +63,7 @@ if (!IS_PRODUCTION) {
 
 if (IS_PRODUCTION) {
 	config.devtool = 'source-map';
+	config.entry = path.join(__dirname, 'client/index.js');
 	config.plugins.push(
 		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.UglifyJsPlugin()

@@ -3,7 +3,9 @@
 .DS_Store
 node_modules
 bower_components
-static/js
+static
+!static/images
+!static/fonts
 logs
 server/config/local.js
 server/pids
