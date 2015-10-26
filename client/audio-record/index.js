@@ -62,7 +62,7 @@ class AudioRecorder {
 				numChannels: 1
 			})
 			.then(() => {
-				this.node = (this.context.createScriptProcessor || this.context.createJavaScriptNode).call(this.context, 4096, 2, 2);
+				this.node = (this.context.createScriptProcessor || this.context.createJavaScriptNode).call(this.context, 0, 1, 1);
 				this.node.onaudioprocess = this.onAudioProcess.bind(this);
 				this.source.connect(this.node);
 				this.node.connect(this.context.destination);

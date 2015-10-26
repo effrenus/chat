@@ -1,6 +1,8 @@
+import {updateAppState} from './ui';
 import userActionType from '../constants/user';
 import videoStream from '../video-stream';
 import transport from '../socket';
+import {APP_STATES} from '../constants/ui';
 
 export function setUserData(user, contacts) {
 	return {
@@ -45,6 +47,7 @@ export function fetchUserData() {
 	return dispatch => {
 		transport.socket.on('s.user.set_data', function handler({data, contacts}) {
 			dispatch(setUserData(data, contacts));
+			setTimeout(() => dispatch(updateAppState(APP_STATES.DATA_LOADED)), 1000);
 			videoStream.init(data._id);
 			transport.socket.removeEventListener(handler);
 		});

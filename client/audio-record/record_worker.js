@@ -4,8 +4,6 @@ import recorderUrl from 'file!./workers/recorder';
 
 export const worker = new Worker(recorderUrl);
 
-export const encoderWorker = new Worker(encoderUrl);
-
 export const uint8ArrayToFloat32Array = function(u8a) {
 	const f32Buffer = new Float32Array(u8a.length);
 	for (let i = 0; i < u8a.length; i++) {
@@ -34,7 +32,6 @@ export const init = function(config) {
 	});
 };
 
-
 export const exportWAV = function(type) {
 	return new Promise(resolve => {
 		worker.addEventListener('message', function eventHandler(event) {
@@ -62,11 +59,10 @@ export const record = function(data) {
 
 export const convertToMP3 = function(audiodata) {
 	return new Promise(resolve => {
-		let arrayBuffer;
 		const fileReader = new FileReader();
-
 		fileReader.onload = function() {
-			arrayBuffer = this.result;
+			const encoderWorker = new Worker(encoderUrl);
+			const arrayBuffer = this.result;
 			const buffer = new Uint8Array(arrayBuffer);
 			const	data = parseWav(buffer);
 
@@ -76,7 +72,7 @@ export const convertToMP3 = function(audiodata) {
 					mode: 3,
 					channels: 1,
 					samplerate: data.sampleRate,
-					bitrate: data.bitsPerSample
+					bitrate: 96
 				}
 			});
 
@@ -95,6 +91,7 @@ export const convertToMP3 = function(audiodata) {
 						type: 'audio/mp3'
 					});
 					resolve(mp3Blob);
+					encoderWorker.terminate();
 				}
 			};
 		};
