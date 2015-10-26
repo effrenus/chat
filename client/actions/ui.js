@@ -42,3 +42,10 @@ export function stopRecordAudioMessage() {
 		type: uiActionType.STOP_RECORD_AUDIO_MESSAGE
 	};
 }
+
+export function updateAppState(state) {
+	return {
+		type: uiActionType.UPDATE_APP_STATE,
+		state
+	};
+}

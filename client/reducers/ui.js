@@ -1,7 +1,8 @@
 import assign from 'object-assign';
-import uiActionType from '../constants/ui';
+import uiActionType, {APP_STATES} from '../constants/ui';
 
 const defaultData = {
+	app_state: APP_STATES.LOADING,
 	errors: {
 		addChannel: false
 	},
@@ -43,6 +44,9 @@ export function ui(state = defaultData, action) {
 	case uiActionType.STOP_RECORD_AUDIO_MESSAGE:
 		state.audioRecord.active = false;
 		return assign({}, state);
+
+	case uiActionType.UPDATE_APP_STATE:
+		return {...state, app_state: action.state};
 
 	default:
 		return state;
