@@ -1,3 +1,4 @@
+/* eslint no-unused-expressions: 0 */
 import Peer from 'peerjs';
 import {getUserMedia} from '../utils/media'; /* eslint no-unused-vars: 0*/
 import store from '../store';
@@ -18,7 +19,7 @@ const userMedia = {
 	}
 };
 
-const videoStream =  {
+const videoStream = {
 	init: function(userId) {
 		const {hostname, port} = window.location;
 		this.userId = userId;

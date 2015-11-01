@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import transport from './socket';
 import store from './store';
@@ -12,8 +12,11 @@ import './styles/page.sass';
 @connect(store => ({
 	ui: store.ui
 }))
+class App extends Component {
+	propTypes = {
+		ui: PropTypes.object
+	}
 
-export default class App extends Component {
 	componentWillMount() {
 		transport.init();
 		store.dispatch(fetchUserData());
@@ -34,3 +37,5 @@ export default class App extends Component {
 					<div className="splash"></div> : this.renderUI();
 	}
 }
+
+export default App;

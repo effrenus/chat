@@ -11,7 +11,7 @@ class Input extends Component {
 	}
 
 	componentDidMount() {
-		this.refs.messageInput.getDOMNode().addEventListener('keydown', event => {
+		this.refs.messageInput.addEventListener('keydown', event => {
 			if (event.keyCode === 13) {
 				if (event.ctrlKey || event.metaKey) {
 					this.insertNewline(event);
@@ -26,7 +26,7 @@ class Input extends Component {
 		event.preventDefault();
 		event.stopPropagation();
 
-		const elm = this.refs.messageInput.getDOMNode();
+		const elm = this.refs.messageInput;
 		const value = elm.value;
 		const start = elm.selectionStart;
 		elm.value = `${value.slice(0, start)}\n${value.slice(elm.selectionEnd)}`;
@@ -37,7 +37,7 @@ class Input extends Component {
 		event.preventDefault();
 		event.stopPropagation();
 
-		const elm = this.refs.messageInput.getDOMNode();
+		const elm = this.refs.messageInput;
 		const text = elm.value.trim();
 		if (text.length > 0) {
 			const {addMessage, activeChannelId, user} = this.props;

@@ -7,7 +7,7 @@ import './index.sass';
 class Login extends Component {
 	static propTypes = {
 		history: PropTypes.object
-	};
+	}
 
 	constructor() {
 		super();

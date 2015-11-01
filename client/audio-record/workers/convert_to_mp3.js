@@ -1,3 +1,4 @@
+/* globals importScripts, Lame */
 importScripts('/static/js/libs/libmp3lame.min.js');
 
 var mp3codec; /* eslint vars-on-top: 0 */
