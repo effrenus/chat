@@ -19,7 +19,7 @@
     "lint"
   ],
   "engines": {
-    "node": "5.x"
+    "node": "4.x"
   },
   "homepage": "https://vanilla-chat.herokuapp.com/",
   "dependencies": {
