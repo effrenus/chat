@@ -8,7 +8,8 @@ class UserInfoForm extends Component {
 		dispatch: PropTypes.func.isRequired,
 		user: PropTypes.object.isRequired,
 		modifyInfoDisable: PropTypes.func
-	};
+	}
+
 	constructor() {
 		super();
 		this.state = {error: null, user: {}};
@@ -56,7 +57,7 @@ class UserInfoForm extends Component {
 			input = <input className="changeinfo-form__radio-input" type="radio" onChange={this.handleChange.bind(this)} name={name} value={value} id={id} checked/>;
 		}
 		return (
-			<label className={'changeinfo-form__item-label changeinfo-form__item-label--' + [name]} htmlFor={id}>
+			<label key={`${name}-${id}`} className={'changeinfo-form__item-label changeinfo-form__item-label--' + [name]} htmlFor={id}>
 				{input}
 				<div className={'changeinfo-form__item changeinfo-form__item--' + [name]} style={style}/>
 			</label>
@@ -75,17 +76,12 @@ class UserInfoForm extends Component {
 										 '/static/images/avatar/4.png', '/static/images/avatar/5.png', '/static/images/avatar/6.png', '/static/images/avatar/7.png'];
 		const userAvatar = [];
 		const userColors = [];
-		/* eslint guard-for-in: 0 */
-		for (let i in avatars) {
-			userAvatar.push(this.renderInput('avatar', avatars[i], 'avatar-' + (++i)));
-		}
-		for (let k in colors) {
-			userColors.push(this.renderInput('color', colors[k], 'color-' + (++k)));
-		}
+
+		avatars.forEach((avatar, i) => userAvatar.push(this.renderInput('avatar', avatar, `avatar-${i}`)));
+		colors.forEach((color, i) => userAvatar.push(this.renderInput('color', color, `color-${i}`)));
 
 		return (
 			<div className="changeinfo-form__wrap">
-				<div onClick={this.props.modifyInfoDisable} className={'changeinfo-form__background' + (this.props.user.edit ? ' changeinfo-form__background--active' : '')}></div>
 				<form className={'changeinfo-form' + (this.props.user.edit ? ' changeinfo-form--active' : '')} ref="form" onSubmit={::this.onSubmit} action="." method="POST">
 					{this.state.error ? this.renderError() : ''}
 					<span onClick={this.props.modifyInfoDisable} className="changeinfo-form__close">Close</span>

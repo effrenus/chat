@@ -44,7 +44,7 @@ class AudioMessage extends Component {
 	render() {
 		return (
 			<div className="audio-message">
-				<button onClick={::this.toggle}  className="audio-message__button">
+				<button onClick={::this.toggle} className="audio-message__button">
 					<i className="fa fa-music"></i> {this.state.playing ? 'Stop' : 'Play'}
 				</button>
 			</div>

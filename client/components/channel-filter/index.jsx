@@ -19,13 +19,13 @@ class ChannelFilter extends Component {
 	}
 
 	_handleKeyUp() {
-		const input = this.refs.input.getDOMNode();
+		const {input} = this.refs;
 		this._onTextChange(input.value);
 		this.setState({isEmpty: !input.value});
 	}
 
 	_clearInput() {
-		const input = this.refs.input.getDOMNode();
+		const {input} = this.refs.input;
 		input.value = '';
 		this._onTextChange('');
 		this.setState({isEmpty: true});

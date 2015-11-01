@@ -11,6 +11,7 @@
 		"block-scoped-var": 0,
 		"no-var": 0,
 		"func-names": 0,
-		"no-shadow": 1
+		"no-shadow": 1,
+		"id-length": 0
 	}
 }

@@ -53,7 +53,7 @@ var Channels = inherit({
 
 						// TODO: Set default channel to active
 						// TODO: Invoke user method `removeChannel`
-						delete Users[socket.handshake.user._id].contacts[channel.id];
+						// delete Users[socket.handshake.user._id].contacts[channel.id];
 
 						socket.emit('s.channel.delete', sendObject);
 					});
@@ -87,20 +87,20 @@ var Channels = inherit({
 					.then(channel => {
 						var promises = [];
 						if (channel && !this._user.hasContact(channel._id)) {
-							promises.push(Channel.prepareChannel(socket.handshake.user._id, channel));
+							promises.push(models.Channel.prepareChannel(socket.handshake.user._id, channel));
 
 							if (this.isUserOnline(toUser._id)) {
-								promises.push(Channel.prepareChannel(toUser._id, channel));
+								promises.push(models.Channel.prepareChannel(toUser._id, channel));
 							}
 							return Promise.all(promises);
 						}
 					})
 					.then(result => {
 						var sendData = result[0];
-						Users[socket.handshake.user._id].contacts[sendData._id] = sendData;
+						this._user.contacts[sendData._id] = sendData;
 						if (this.isUserOnline(toUser._id) && result[1]) {
-							Users[toUser._id].contacts[sendData._id] = result[1];
-							manager.sendStatus('s.channel.add', socket.handshake.user._id, sendData, Users[toUser._id].contacts[sendData._id]);
+							manager.users.getById(toUser._id).contacts[sendData._id] = result[1];
+							manager.sendStatus('s.channel.add', socket.handshake.user._id, sendData, manager.users.getById(toUser._id).contacts[sendData._id]);
 						}
 
 						socket.emit('s.channel.add', {channel: sendData._id, custom: sendData});

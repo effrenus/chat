@@ -28,13 +28,13 @@ class Dialog extends Component {
 	}
 
 	componentWillUpdate() {
-		const node = this.refs.container.getDOMNode();
+		const node = this.refs.container;
 		this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
 	}
 
 	componentDidUpdate() {
 		if (this.shouldScrollBottom) {
-			const node = this.refs.messageContainer.getDOMNode();
+			const node = this.refs.messageContainer;
 
 			if (this.reverseMessage) {
 				node.scrollTop = 0;

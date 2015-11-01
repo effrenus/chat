@@ -15,7 +15,7 @@ class ContactAdd extends Component {
 	}
 
 	componentDidMount() {
-		this.refs.input.getDOMNode().addEventListener('keyup', event => {
+		this.refs.input.addEventListener('keyup', event => {
 			if (this.props.ui.errors.addChannel) {
 				this.props.removeError('addChannel');
 			}
@@ -26,7 +26,7 @@ class ContactAdd extends Component {
 				this._toggle(event);
 			}
 		});
-		this.refs.input.getDOMNode().addEventListener('blur', () => {
+		this.refs.input.addEventListener('blur', () => {
 			this.setState({active: false});
 			this.props.removeError('addChannel');
 		});
@@ -35,7 +35,7 @@ class ContactAdd extends Component {
 	_addContact(event) {
 		event.preventDefault();
 
-		const elm = this.refs.input.getDOMNode();
+		const elm = this.refs.input;
 		if (elm.value.trim() !== '') {
 			this.props.sendAddContact(elm.value);
 			setTimeout( () =>{
@@ -48,13 +48,13 @@ class ContactAdd extends Component {
 	}
 
 	_toggle() {
-		const elm = this.refs.input.getDOMNode();
+		const elm = this.refs.input;
 		if (!this.state.active) {
 			setTimeout( () => {
-				this.refs.input.getDOMNode().focus();
+				this.refs.input.focus();
 			}, 200);
 			this.setState({active: true});
-			this.refs.input.getDOMNode().placeholder = 'Enter username';
+			this.refs.input.placeholder = 'Enter username';
 			elm.value = '';
 		} else {
 			this.setState({active: false});

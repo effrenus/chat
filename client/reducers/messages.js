@@ -7,7 +7,7 @@ function updateChannelMessages(state, channelId, message, userId, reverse = fals
 		state[channelId] = {listMessages: [], page: 1};
 	}
 
-	const messageList =  message;
+	const messageList = message;
 
 	if (state[channelId].page !== page) {
 		state[channelId].page = page;
