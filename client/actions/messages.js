@@ -1,11 +1,11 @@
 import * as messageActionType from '../constants/messages';
 import * as channelActionType from '../constants/channels.js';
-import transport from '../socket';
+import {getSocket} from '../socket';
 
 export function addMessage(messageType = 'text', text, channelId, userId) {
 	const data = {message_type: messageType, channelId: channelId, text: text, userId: userId};
 
-	transport.socket.emit('c.user.send_message', data);
+	getSocket().then(socket => socket.emit('c.user.send_message', data));
 
 	return {
 		type: messageActionType.ADD_MESSAGE,
@@ -44,7 +44,7 @@ export function setReadMessages(userId, data, channelId) {
 	}
 	// если есть непрочитанные тогда делаем их прочитанными
 	if (unreadMessages.length) {
-		transport.socket.emit('c.user.read_message', {userId: userId, messages: unreadMessages});
+		getSocket().then(socket => socket.emit('c.user.read_message', {userId: userId, messages: unreadMessages}));
 	}
 	const readLength = unreadMessages.length;
 	return {
@@ -59,13 +59,12 @@ export function fetchChannelMessages(userId, channelId, page = 1, reverse = fals
 		if (channelId.toString() === 'Lobby') {
 			dispatch(prependChannelMessages(channelId, [], userId, page, reverse));
 		} else {
-			transport.socket.emit('c.user.get_message_by_room', {channelId: channelId, page: page});
-
-			transport.socket.on('s.user.message_by_room', function listener(res) {
-				dispatch(prependChannelMessages(channelId, res.data, userId, page, reverse));
-
-				dispatch(setReadMessages(userId, res.data, channelId));
-				transport.socket.removeListener('s.user.message_by_room', listener);
+			getSocket().then(socket => {
+				socket.emit('c.user.get_message_by_room', {channelId: channelId, page: page});
+				socket.once('s.user.message_by_room', function listener(res) {
+					dispatch(prependChannelMessages(channelId, res.data, userId, page, reverse));
+					dispatch(setReadMessages(userId, res.data, channelId));
+				});
 			});
 		}
 	};

@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import transport from './socket';
 import store from './store';
 import Sidebar from './components/sidebar';
 import Main from './components/main';
@@ -13,12 +12,11 @@ import './styles/page.sass';
 	ui: store.ui
 }))
 class App extends Component {
-	propTypes = {
+	static propTypes = {
 		ui: PropTypes.object
 	}
 
 	componentWillMount() {
-		transport.init();
 		store.dispatch(fetchUserData());
 	}
 

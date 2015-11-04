@@ -1,5 +1,5 @@
 import uiActionType from '../constants/ui';
-import videoStream from '../video-stream';
+import videoStream from '../videocall';
 
 export function setError(errorName) {
 	return {

@@ -4,6 +4,7 @@ var middleware = require('../middleware/socket');
 var manager = require('./manager');
 var UserHandler = require('./handlers/user');
 var ChannelHandler = require('./handlers/channel');
+var WebRTC = require('./handlers/webrtc');
 var DEFAULT_CHANNEL_ID = config.get('DEFAULT_CHANNEL_ID');
 
 module.exports.socket = function(server) {
@@ -45,7 +46,8 @@ module.exports.socket = function(server) {
 	io.on('connection', function socketConnectionHandler(socket) {
 		manager.registerHandlers(socket.id, {
 			user: new UserHandler(socket),
-			channel: new ChannelHandler(socket)
+			channel: new ChannelHandler(socket),
+			webrtc: new WebRTC(socket)
 		});
 	});
 
