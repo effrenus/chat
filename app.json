@@ -1,0 +1,36 @@
+{
+  "name":"chat",
+  "scripts":{},
+  "env":{
+    "FB_ID":{
+      "required":true
+    },
+    "FB_SECRET":{
+      "required":true
+    },
+    "NODE_ENV":{
+      "required":true
+    },
+    "NPM_CONFIG_LOGLEVEL":{
+      "required":true
+    },
+    "NPM_CONFIG_PRODUCTION":{
+      "required":true
+    },
+    "SERVER_URL":{
+      "required":true
+    },
+    "SOCKET_ORIGIN":{
+      "required":true
+    },
+    "VK_ID":{
+      "required":true
+    },
+    "VK_SECRET":{
+      "required":true
+    }
+  },
+  "addons":[
+    "mongolab"
+  ]
+}
