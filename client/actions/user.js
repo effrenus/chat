@@ -1,7 +1,7 @@
 import {updateAppState} from './ui';
 import userActionType from '../constants/user';
-import videoStream from '../video-stream';
-import transport from '../socket';
+import videocall from '../videocall';
+import * as transport from '../socket';
 import {APP_STATES} from '../constants/ui';
 
 export function setUserData(user, contacts) {
@@ -35,22 +35,25 @@ export function toggleEditable(val) {
 
 export function updateProfile(dataSend) {
 	return dispatch => {
-		transport.socket.on('s.user.update_data', function handler(data) {
-			dispatch(toggleEditable(false));
-			dispatch(updateUserData(data));
+		transport.getSocket().then(socket => {
+			socket.on('s.user.update_data', function socketUpdateDataHandler(data) {
+				dispatch(toggleEditable(false));
+				dispatch(updateUserData(data));
+			});
+			socket.emit('c.user.update_data', dataSend);
 		});
-		transport.socket.emit('c.user.update_data', dataSend);
 	};
 }
 
 export function fetchUserData() {
 	return dispatch => {
-		transport.socket.on('s.user.set_data', function handler({data, contacts}) {
-			dispatch(setUserData(data, contacts));
-			setTimeout(() => dispatch(updateAppState(APP_STATES.DATA_LOADED)), 1000);
-			videoStream.init(data._id);
-			transport.socket.removeEventListener(handler);
+		transport.getSocket().then(socket => {
+			socket.once('s.user.set_data', function socketSetDataHandler({data, contacts}) {
+				dispatch(setUserData(data, contacts));
+				setTimeout(() => dispatch(updateAppState(APP_STATES.DATA_LOADED)), 1000);
+				videocall.init(data._id);
+			});
+			socket.emit('c.user.get_data');
 		});
-		transport.socket.emit('c.user.get_data');
 	};
 }

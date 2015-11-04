@@ -5,3 +5,19 @@ export const defaultChannelId = '1bd3b5a8a7a560e168b3890a';
 export const STREAM_REQUEST_TIMEOUT = 5000;
 
 export const AUDIO_MESSAGE_DURATION = 30000;
+
+export const videocall = {
+	media: {
+		audio: {
+			mandatory: {
+				echoCancellation: true
+			}
+		},
+		video: {
+			mandatory: {
+				maxWidth: 340,
+				maxHeight: 200
+			}
+		}
+	}
+};

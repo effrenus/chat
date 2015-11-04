@@ -1,7 +1,7 @@
 import channelActionType from '../constants/channels';
-import {activateVideoPanel} from '../actions/ui';
-import transport from '../socket';
-import videoStream from '../video-stream';
+// import {activateVideoPanel} from '../actions/ui';
+import {getSocket} from '../socket';
+import videocall from '../videocall';
 
 export function setChannels(list) {
 	return {
@@ -42,15 +42,13 @@ export function setOfflineChannel(data) {
 }
 
 export function requestVideoCall(contactId) {
-	return dispatch => {
-		videoStream
+	return () => {
+		videocall
 			.requestLocalStream()
-			.then(localStream => videoStream.requestRemoteStream(contactId, localStream))
-			.then(([localStream, remoteStream]) => {
-				dispatch(activateVideoPanel(localStream, remoteStream));
-			})
+			.then(localStream => videocall.setLocalStream(localStream))
+			.then(() => videocall.connect(contactId))
 			.catch(error => {
-				videoStream.stop();
+				videocall.stop();
 				console.log(error);
 			});
 	};
@@ -58,18 +56,21 @@ export function requestVideoCall(contactId) {
 
 export function fetchChannelList() {
 	return dispatch => {
-		transport.socket.emit('c.user.get_channels');
-		transport.socket.on('s.user.set_channels', function handler(list) {
-			dispatch(setChannels(list));
-			transport.socket.removeListener(handler);
+		getSocket().then(socket => {
+			socket.emit('c.user.get_channels');
+			socket.on('s.user.set_channels', function handler(list) {
+				dispatch(setChannels(list));
+				socket.removeListener(handler);
+			});
 		});
 	};
 }
 
 export function changeChannel(id) {
 	return () => {
-		console.log(id);
-		transport.socket.emit('c.channel.join', {id});
+		getSocket().then(socket => {
+			socket.emit('c.channel.join', {id});
+		});
 	};
 }
 
@@ -97,22 +98,24 @@ export function addContact(contact) {
 
 export function deleteChannel(id, num) {
 	return () => {
-		transport.socket.emit('c.channel.delete', {id, num});
+		getSocket().then(socket => socket.emit('c.channel.delete', {id, num}));
 	};
 }
 
 export function sendAddContact(username) {
 	return () => {
-		transport.socket.emit('c.channel.add', {username});
+		getSocket().then(socket => socket.emit('c.channel.add', {username}));
 	};
 }
 
 export function fetchContactList() {
 	return dispatch => {
-		transport.socket.emit('c.user.get_contact_list');
-		transport.socket.on('s.user.SET_CHANNEL_LIST', function handler(contacts) {
-			dispatch(setContactList(contacts));
-			transport.socket.removeListener(handler);
+		getSocket().then(socket => {
+			socket.emit('c.user.get_contact_list');
+			socket.on('s.user.SET_CHANNEL_LIST', function handler(contacts) {
+				dispatch(setContactList(contacts));
+				socket.removeListener(handler);
+			});
 		});
 	};
 }
